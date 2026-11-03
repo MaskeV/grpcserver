@@ -1,0 +1,42 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package com.proto;
+
+
+option java_multiple_files=true;
+option java_outer_classname="StockProto";
+
+
+message Stock{
+  int64 id=1;
+  string symbol=2;
+  double price=3;
+  google.protobuf.Timestamp lastUpdated=4;
+}
+
+message StockReq{
+  string symbol=1;
+}
+
+message Empty{
+
+}
+
+message AddStockReq{
+  string symbol=1;
+  double price=2;
+}
+
+message StockList{
+  repeated Stock stocks=1;
+}
+
+service StockService{
+
+  rpc getStockbyId(StockReq) returns (Stock);
+
+  rpc addStock(AddStockReq) returns (Stock);
+
+  rpc getStocks(Empty) returns (StockList);
+
+}
